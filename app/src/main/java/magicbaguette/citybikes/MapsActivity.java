@@ -16,20 +16,43 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sdoward.rxgooglemap.MapObservableProvider;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.functions.Action1;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
 	private GoogleMap mMap;
+	private MapObservableProvider mapObservableProvider;
 
-	// Views
+	//---> Views
 	@BindView(R.id.sliding_layout)
 	SlidingUpPanelLayout sliding_layout;
 	@BindView(R.id.tv_sliding_content)
 	TextView tv_sliding_content;
+	//<--- Views
+
+	//---> Actions
+	Action1 markerClickAction = new Action1<Marker>() {
+		@Override
+		public void call(Marker marker) {
+			sliding_layout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+
+		}
+	};
+	Action1 mapClickAction = new Action1<LatLng>() {
+		@Override
+		public void call(LatLng latLng) {
+			sliding_layout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
+
+
+		}
+	};
+	//<--- Actions
+
 	/**
 	 * ATTENTION: This was auto-generated to implement the App Indexing API.
 	 * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -41,10 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_maps);
 		ButterKnife.bind(this);
-		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
-		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.map);
-		mapFragment.getMapAsync(this);
+
 		init();
 		// ATTENTION: This was auto-generated to implement the App Indexing API.
 		// See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -52,7 +72,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	}
 
 	private void init() {
-		sliding_layout.setAnchorPoint(60);
+		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
+		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.map);
+		mapFragment.getMapAsync(this);
+		mapObservableProvider = new MapObservableProvider(mapFragment);
+		sliding_layout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
 	}
 
 
@@ -75,13 +100,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	
 	private void initMap(GoogleMap map) {
 		mMap = map;
-		mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-			@Override
-			public void onMapClick(LatLng latLng) {
-				sliding_layout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-
-			}
-		});
+		mapObservableProvider.getMarkerClickObservable().subscribe(markerClickAction);
+		mapObservableProvider.getMapClickObservable().subscribe(mapClickAction);
 	}
 	
 	private void addMarkers() {
@@ -91,13 +111,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng belgium = new LatLng(50.5039, 4.4699);
 		mMap.addMarker(new MarkerOptions().position(belgium)).setTitle("Bikes in Belgium");
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(belgium));
-		mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-			@Override
-			public boolean onMarkerClick(Marker marker) {
-				sliding_layout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
-				return true;
-			}
-		});
 	}
 
 

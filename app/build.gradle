@@ -31,12 +31,17 @@ dependencies {
 
     // Google
     compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.google.android.gms:play-services:9.2.1'
+    compile 'com.google.android.gms:play-services-maps:9.2.0'
+    compile 'com.google.android.gms:play-services-appindexing:9.2.0'
 
     // Others
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.sothree.slidinguppanel:library:3.3.1'
+    compile 'com.sdoward:rxgooglemaps:1.1.1@aar'
+
+    // Reactive
+    compile 'io.reactivex:rxjava:1.2.0'
 
 
 }
