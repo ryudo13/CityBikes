@@ -1,0 +1,13 @@
+<application>
+  <component name="FileTypeManager" version="16">
+    <ignoreFiles list="*.hprof;*.pyc;*.pyo;*.rbc;*~;.DS_Store;.git;.hg;.svn;CVS;RCS;SCCS;__pycache__;_svn;rcs;" />
+    <extensionMap>
+      <mapping pattern="ResultListSorting" type="CLASS" />
+      <mapping pattern="NavigationDrawer" type="CLASS" />
+      <mapping pattern="ResultListSort" type="JAVA" />
+      <mapping ext="gralde" type="Native" />
+      <mapping pattern="more_borders" type="XML" />
+      <mapping pattern="fade_in" type="XML" />
+    </extensionMap>
+  </component>
+</application>

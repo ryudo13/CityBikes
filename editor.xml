@@ -1,0 +1,8 @@
+<application>
+  <component name="EditorSettings">
+    <option name="USE_SOFT_WRAPS" value="" />
+    <option name="QUICK_DOC_ON_MOUSE_OVER_DELAY_MS" value="600" />
+    <option name="IS_ANIMATED_SCROLLING" value="false" />
+    <option name="REFRAIN_FROM_SCROLLING" value="true" />
+  </component>
+</application>
