@@ -538,6 +538,12 @@
         <option name="FOREGROUND" value="93a2cc" />
       </value>
     </option>
+    <option name="STATIC_FINAL_FIELD_ATTRIBUTES">
+      <value>
+        <option name="FOREGROUND" value="335cba" />
+        <option name="FONT_TYPE" value="3" />
+      </value>
+    </option>
     <option name="STATIC_METHOD_ATTRIBUTES">
       <value>
         <option name="FOREGROUND" value="a7a7d1" />
